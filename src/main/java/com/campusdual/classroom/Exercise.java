@@ -2,13 +2,30 @@ package com.campusdual.classroom;
 
 import com.campusdual.Utils;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+class Route{
+    public static final String PATH_NAME = "src/main/resources/data.txt";
+}
 public class Exercise {
 
     public static void main(String[] args) {
+        String texToSave = generateStringToSave(null);
+        printToFile(texToSave);
+        System.out.println("Texto guardado");
 
     }
 
     public static String generateStringToSave(String string) {
+        if (string == null || string.isEmpty()){
+            return generateUserInputToSave();
+        }else{
+            return string;
+        }
 
     }
 
@@ -23,6 +40,12 @@ public class Exercise {
     }
 
     public static void printToFile(String string) {
+        Path filePath = Paths.get(Route.PATH_NAME);
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filePath.toFile()))){
+            pw.print(string);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 
